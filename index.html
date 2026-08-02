@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tourism Promotion Website</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top glass-nav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
+                <span class="brand-mark">TP</span>
+                <span>Tourism Promotion</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="#destinations">Destinations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#packages">Packages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#culture">Culture</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <button class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                            <i class="bi bi-calendar2-check me-1"></i> Plan Trip
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-icon" id="themeToggle" type="button" aria-label="Toggle dark mode">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container position-relative">
+            <div class="row align-items-end min-vh-100 py-5">
+                <div class="col-lg-7 pt-5 reveal">
+                    <span class="eyebrow text-warning">Sustainable & Responsible Tourism</span>
+                    <h1 class="display-3 fw-bold text-white mt-3">Explore destinations, culture, hotels, guides, and local services in one place.</h1>
+                    <p class="lead text-white-75 mt-3">A modern tourism platform that helps visitors plan easier trips while giving local businesses stronger digital visibility.</p>
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a class="btn btn-brand btn-lg" href="#destinations">
+                            <i class="bi bi-compass me-2"></i>Explore Now
+                        </a>
+                        <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                            <i class="bi bi-send me-2"></i>Book a Visit
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-5 reveal delay-1">
+                    <div class="trip-finder">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div>
+                                <span class="eyebrow">Quick search</span>
+                                <h2 class="h4 mb-0">Find your next destination</h2>
+                            </div>
+                            <span class="badge text-bg-success">Live Demo</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" for="heroSearch">Destination or activity</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input class="form-control" id="heroSearch" type="search" placeholder="Beach, hill station, heritage...">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="heroCategory">Category</label>
+                                <select class="form-select" id="heroCategory">
+                                    <option value="all">All categories</option>
+                                    <option>Beach</option>
+                                    <option>Hill Station</option>
+                                    <option>Heritage</option>
+                                    <option>Wildlife</option>
+                                    <option>Pilgrimage</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="heroBudget">Budget</label>
+                                <select class="form-select" id="heroBudget">
+                                    <option value="all">Any budget</option>
+                                    <option value="budget">Below Rs. 7000</option>
+                                    <option value="mid">Rs. 7000 - Rs. 10000</option>
+                                    <option value="premium">Above Rs. 10000</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-brand w-100" id="heroSearchBtn" type="button">
+                                    <i class="bi bi-lightning-charge me-1"></i>Show Matches
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="impact-strip">
+            <div class="container">
+                <div class="row g-0">
+                    <div class="col-md-3 col-6">
+                        <div class="impact-item">
+                            <span class="counter" data-count="12">0</span>
+                            <p>Tourist places</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="impact-item">
+                            <span class="counter" data-count="24">0</span>
+                            <p>Local services</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="impact-item">
+                            <span class="counter" data-count="8">0</span>
+                            <p>Cultural events</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="impact-item">
+                            <span class="counter" data-count="15">0</span>
+                            <p>Business partners</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="destinations" class="section-pad">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Explore</span>
+                    <h2>Popular tourist destinations</h2>
+                    <p>Search, filter, compare, view details, and start a booking request instantly.</p>
+                </div>
+
+                <div class="filter-bar reveal delay-1">
+                    <div class="input-group search-input">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input class="form-control" id="destinationSearch" type="search" placeholder="Search places, locations, or experiences">
+                    </div>
+                    <div class="chip-group" id="categoryFilters" aria-label="Destination filters"></div>
+                    <select class="form-select sort-select" id="sortSelect" aria-label="Sort destinations">
+                        <option value="featured">Featured</option>
+                        <option value="rating">Top rated</option>
+                        <option value="priceLow">Price low to high</option>
+                        <option value="priceHigh">Price high to low</option>
+                    </select>
+                </div>
+
+                <div class="row g-4 mt-2" id="destinationGrid"></div>
+                <div class="empty-state d-none" id="emptyState">
+                    <i class="bi bi-search"></i>
+                    <h3>No matching destination found</h3>
+                    <p>Try another keyword or clear the filters.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section-pad soft-section">
+            <div class="container">
+                <div class="row align-items-end g-4">
+                    <div class="col-lg-7 reveal">
+                        <span class="eyebrow">Facilities</span>
+                        <h2>Hotels, guides, restaurants, transport, and local sellers</h2>
+                        <p class="section-copy">Local service providers can showcase their offers, receive customer requests, and support employment through digital tourism.</p>
+                    </div>
+                    <div class="col-lg-5 text-lg-end reveal delay-1">
+                        <button class="btn btn-outline-brand" data-bs-toggle="offcanvas" data-bs-target="#providerCanvas">
+                            <i class="bi bi-shop me-2"></i>Provider Demo
+                        </button>
+                    </div>
+                </div>
+                <div class="row g-4 mt-2" id="serviceGrid"></div>
+            </div>
+        </section>
+
+        <section id="packages" class="section-pad">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Travel plans</span>
+                    <h2>Interactive travel packages</h2>
+                    <p>Choose a package and the booking modal fills automatically.</p>
+                </div>
+
+                <div id="packageCarousel" class="carousel slide reveal delay-1" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="packageCarouselInner"></div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#packageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#packageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="culture" class="section-pad culture-section">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-5 reveal">
+                        <span class="eyebrow text-warning">Culture and economy</span>
+                        <h2 class="text-white">Promoting local culture creates wider tourism income.</h2>
+                        <p class="text-white-75">Festivals, food fairs, handicraft stalls, and guided heritage walks help visitors connect with real communities while supporting small businesses.</p>
+                        <div class="nav nav-pills culture-tabs" id="cultureTabs" role="tablist">
+                            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#eventsPane" type="button">Events</button>
+                            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#impactPane" type="button">Impact</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 reveal delay-1">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="eventsPane" tabindex="0">
+                                <div class="event-list" id="eventList"></div>
+                            </div>
+                            <div class="tab-pane fade" id="impactPane" tabindex="0">
+                                <div class="impact-card">
+                                    <h3>How this project creates impact</h3>
+                                    <div class="progress-stack">
+                                        <div>
+                                            <span>Local business visibility</span>
+                                            <div class="progress"><div class="progress-bar" style="width: 88%"></div></div>
+                                        </div>
+                                        <div>
+                                            <span>Tourist convenience</span>
+                                            <div class="progress"><div class="progress-bar bg-warning" style="width: 92%"></div></div>
+                                        </div>
+                                        <div>
+                                            <span>Employment opportunity</span>
+                                            <div class="progress"><div class="progress-bar bg-info" style="width: 76%"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="section-pad">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Modules</span>
+                    <h2>User, admin, and service provider dashboard</h2>
+                    <p>The demo stores bookings, reviews, and provider updates in your browser.</p>
+                </div>
+
+                <ul class="nav nav-tabs dashboard-tabs reveal delay-1" id="moduleTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#userPanel" type="button">User Module</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#adminPanel" type="button">Admin Module</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#providerPanel" type="button">Provider Module</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content dashboard-shell reveal delay-2">
+                    <div class="tab-pane fade show active" id="userPanel" tabindex="0">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                            <div>
+                                <h3 class="mb-1">My bookings</h3>
+                                <p class="mb-0 text-muted">Requests submitted from the booking form appear here.</p>
+                            </div>
+                            <button class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                                <i class="bi bi-plus-lg me-1"></i>New Booking
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Destination</th>
+                                        <th>Package</th>
+                                        <th>Date</th>
+                                        <th>Guests</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="adminPanel" tabindex="0">
+                        <div class="row g-4">
+                            <div class="col-lg-5">
+                                <form class="module-form" id="adminDestinationForm">
+                                    <h3>Add destination</h3>
+                                    <input class="form-control" name="name" placeholder="Destination name" required>
+                                    <input class="form-control" name="location" placeholder="Location" required>
+                                    <select class="form-select" name="category" required>
+                                        <option>Beach</option>
+                                        <option>Hill Station</option>
+                                        <option>Heritage</option>
+                                        <option>Wildlife</option>
+                                        <option>Pilgrimage</option>
+                                    </select>
+                                    <input class="form-control" name="price" type="number" min="0" placeholder="Starting price" required>
+                                    <input class="form-control" name="image" type="url" placeholder="Image URL" required>
+                                    <textarea class="form-control" name="description" rows="3" placeholder="Description" required></textarea>
+                                    <button class="btn btn-brand w-100" type="submit">Save Destination</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-7">
+                                <h3>Destination records</h3>
+                                <div class="admin-list" id="adminDestinationList"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="providerPanel" tabindex="0">
+                        <div class="row g-4">
+                            <div class="col-lg-5">
+                                <form class="module-form" id="providerServiceForm">
+                                    <h3>Add local service</h3>
+                                    <input class="form-control" name="name" placeholder="Service name" required>
+                                    <select class="form-select" name="type" required>
+                                        <option>Hotel</option>
+                                        <option>Guide</option>
+                                        <option>Transport</option>
+                                        <option>Restaurant</option>
+                                        <option>Handicraft</option>
+                                    </select>
+                                    <input class="form-control" name="location" placeholder="Location" required>
+                                    <input class="form-control" name="price" type="number" min="0" placeholder="Starting price" required>
+                                    <textarea class="form-control" name="description" rows="3" placeholder="Service details" required></textarea>
+                                    <button class="btn btn-brand w-100" type="submit">Save Service</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-7">
+                                <h3>Provider services</h3>
+                                <div class="admin-list" id="providerServiceList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <h2>Tourism Promotion Website</h2>
+                    <p>Digital tourism support for better visitor experience, local income, and sustainable community development.</p>
+                </div>
+                <div class="col-lg-5 text-lg-end">
+                    <a class="btn btn-light me-2" href="#destinations">Explore</a>
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#bookingModal">Plan Trip</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="destinationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-0" id="destinationModalBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <span class="eyebrow">Booking request</span>
+                        <h2 class="modal-title h4" id="bookingModalTitle">Plan your trip</h2>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="bookingForm">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="bookingName">Name</label>
+                                <input class="form-control" id="bookingName" name="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="bookingPhone">Phone or email</label>
+                                <input class="form-control" id="bookingPhone" name="contact" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="bookingDestination">Destination</label>
+                                <select class="form-select" id="bookingDestination" name="destination" required></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="bookingPackage">Package</label>
+                                <select class="form-select" id="bookingPackage" name="package"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="bookingDate">Travel date</label>
+                                <input class="form-control" id="bookingDate" name="date" type="date" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="bookingGuests">Guests</label>
+                                <input class="form-control" id="bookingGuests" name="guests" type="number" min="1" value="2" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="bookingNotes">Notes</label>
+                                <textarea class="form-control" id="bookingNotes" name="notes" rows="3" placeholder="Hotel, guide, transport, food, or accessibility needs"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-brand" type="submit">Submit Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h4 mb-0">Add review</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="reviewForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="reviewDestination" name="destination">
+                        <label class="form-label" for="reviewName">Your name</label>
+                        <input class="form-control mb-3" id="reviewName" name="name" required>
+                        <label class="form-label" for="reviewRating">Rating</label>
+                        <select class="form-select mb-3" id="reviewRating" name="rating" required>
+                            <option value="5">5 - Excellent</option>
+                            <option value="4">4 - Good</option>
+                            <option value="3">3 - Average</option>
+                            <option value="2">2 - Poor</option>
+                            <option value="1">1 - Bad</option>
+                        </select>
+                        <label class="form-label" for="reviewText">Comment</label>
+                        <textarea class="form-control" id="reviewText" name="comment" rows="3" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-brand" type="submit">Save Review</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="providerCanvas" aria-labelledby="providerCanvasTitle">
+        <div class="offcanvas-header">
+            <div>
+                <span class="eyebrow">Service provider</span>
+                <h2 class="h4 mb-0" id="providerCanvasTitle">Digital visibility tools</h2>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="provider-feature">
+                <i class="bi bi-shop"></i>
+                <div>
+                    <h3>List services</h3>
+                    <p>Add hotel, guide, transport, restaurant, or handicraft details.</p>
+                </div>
+            </div>
+            <div class="provider-feature">
+                <i class="bi bi-inbox"></i>
+                <div>
+                    <h3>View requests</h3>
+                    <p>Booking requests appear in the dashboard for quick follow-up.</p>
+                </div>
+            </div>
+            <div class="provider-feature">
+                <i class="bi bi-graph-up-arrow"></i>
+                <div>
+                    <h3>Grow local income</h3>
+                    <p>Online visibility helps small tourism businesses reach more visitors.</p>
+                </div>
+            </div>
+            <a class="btn btn-brand w-100 mt-3" href="#dashboard" data-bs-dismiss="offcanvas">Open Provider Module</a>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="appToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+            <div class="toast-header">
+                <span class="toast-dot me-2"></span>
+                <strong class="me-auto">Tourism Promotion</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">Saved successfully.</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

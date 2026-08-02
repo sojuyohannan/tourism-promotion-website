@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login — Tourism Promotion Website</title>
+  <meta name="description" content="Sign in to your Tourism Promotion account to book trips, manage services, or access the admin panel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    body { min-height: 100vh; display: flex; }
+    .auth-wrapper { display: flex; width: 100%; min-height: 100vh; }
+
+    /* Left panel */
+    .auth-left {
+      flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 3rem 2rem; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #062b22 0%, #0a4a3a 50%, #083d30 100%);
+    }
+    .auth-left-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(232,131,58,.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(10,124,105,.35) 0%, transparent 50%);
+    }
+    .auth-left-content { position: relative; z-index: 1; text-align: center; max-width: 420px; }
+    .auth-brand { display: inline-flex; align-items: center; gap: .75rem; margin-bottom: 2.5rem; }
+    .auth-brand-mark {
+      width: 52px; height: 52px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--brand, #0a7c69), #14c4a8);
+      display: grid; place-items: center; color: #fff; font-size: 1.5rem;
+    }
+    .auth-brand-text { font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .auth-brand-text span { color: #f4c842; }
+    .auth-illustration {
+      width: 100%; max-width: 340px; margin: 0 auto 2rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 24px; padding: 2rem; backdrop-filter: blur(10px);
+    }
+    .auth-illustration i { font-size: 5rem; color: #f4c842; display: block; margin-bottom: 1rem; }
+    .auth-left h2 { color: #fff; font-weight: 800; font-size: 1.6rem; }
+    .auth-left p { color: rgba(255,255,255,.72); }
+    .auth-features { display: grid; gap: .75rem; text-align: left; margin-top: 1.5rem; }
+    .auth-feature { display: flex; align-items: center; gap: .75rem; color: rgba(255,255,255,.85); font-size: .9rem; }
+    .auth-feature i { color: #f4c842; font-size: 1rem; flex-shrink: 0; }
+
+    /* Right panel */
+    .auth-right {
+      width: 480px; display: flex; align-items: center; justify-content: center;
+      padding: 2.5rem 2rem; background: var(--surface, #fff);
+    }
+    .auth-card { width: 100%; max-width: 400px; }
+    .auth-card h1 { font-size: 2rem; font-weight: 900; color: var(--ink, #0f1f26); }
+    .auth-card .sub { color: var(--muted, #6b8490); margin-bottom: 2rem; }
+
+    /* Role tabs */
+    .role-tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+    .role-tab {
+      flex: 1; padding: .6rem; border: 1.5px solid var(--line, #dce8eb);
+      border-radius: 12px; background: transparent; cursor: pointer;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: .82rem;
+      color: var(--muted, #6b8490); transition: all .25s ease; text-align: center;
+    }
+    .role-tab i { display: block; font-size: 1.3rem; margin-bottom: .2rem; }
+    .role-tab.active { border-color: var(--brand, #0a7c69); background: rgba(10,124,105,.08); color: var(--brand, #0a7c69); }
+
+    .input-icon { position: relative; }
+    .input-icon i { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: var(--muted, #6b8490); }
+    .input-icon input { padding-left: 2.5rem; }
+    .pw-toggle { position: absolute; right: .9rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--muted, #6b8490); background: none; border: none; }
+
+    .divider { display: flex; align-items: center; gap: 1rem; margin: 1.25rem 0; color: var(--muted, #6b8490); font-size: .85rem; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line, #dce8eb); }
+
+    @media (max-width: 767px) {
+      .auth-left { display: none; }
+      .auth-right { width: 100%; }
+    }
+    [data-theme="dark"] .auth-right { background: var(--surface, #132830); }
+    [data-theme="dark"] .auth-card h1 { color: var(--ink); }
+    [data-theme="dark"] .role-tab { color: var(--muted); border-color: var(--line); }
+  </style>
+</head>
+<body>
+<div class="auth-wrapper">
+
+  <!-- LEFT — Branding -->
+  <div class="auth-left">
+    <div class="auth-left-bg"></div>
+    <div class="auth-left-content">
+      <div class="auth-brand">
+        <div class="auth-brand-mark"><i class="bi bi-globe-americas"></i></div>
+        <span class="auth-brand-text">Tourism<span>Pro</span></span>
+      </div>
+      <div class="auth-illustration">
+        <i class="bi bi-compass-fill"></i>
+        <h2>Your Journey Starts Here</h2>
+        <p>Access destinations, book trips, manage services, and explore India's best tourism experiences.</p>
+      </div>
+      <div class="auth-features">
+        <div class="auth-feature"><i class="bi bi-check-circle-fill"></i><span>Search & book tourist destinations</span></div>
+        <div class="auth-feature"><i class="bi bi-check-circle-fill"></i><span>List and manage local services</span></div>
+        <div class="auth-feature"><i class="bi bi-check-circle-fill"></i><span>Admin control over all platform data</span></div>
+        <div class="auth-feature"><i class="bi bi-check-circle-fill"></i><span>Sustainable &amp; Responsible Tourism</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — Form -->
+  <div class="auth-right">
+    <div class="auth-card">
+      <a href="/" class="d-inline-flex align-items-center gap-2 text-muted mb-4 small">
+        <i class="bi bi-arrow-left"></i> Back to Home
+      </a>
+      <h1>Welcome Back</h1>
+      <p class="sub">Sign in to your account to continue</p>
+
+      <!-- Role Selector -->
+      <div class="role-tabs">
+        <button class="role-tab active" data-role="user" id="roleUser">
+          <i class="bi bi-person-fill"></i>Tourist
+        </button>
+        <button class="role-tab" data-role="admin" id="roleAdmin">
+          <i class="bi bi-shield-fill-check"></i>Admin
+        </button>
+        <button class="role-tab" data-role="provider" id="roleProvider">
+          <i class="bi bi-shop-window"></i>Provider
+        </button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <input type="hidden" id="selectedRole" value="user">
+        <div class="mb-3">
+          <label class="form-label fw-600">Email Address</label>
+          <div class="input-icon">
+            <i class="bi bi-envelope"></i>
+            <input type="email" class="form-control form-control-lg" id="loginEmail" placeholder="you@example.com" required autocomplete="email">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-600">Password</label>
+          <div class="input-icon">
+            <i class="bi bi-lock"></i>
+            <input type="password" class="form-control form-control-lg" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+            <button type="button" class="pw-toggle" id="pwToggle"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label small" for="rememberMe">Remember me</label>
+          </div>
+          <a href="#" class="small text-brand">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-brand w-100 btn-lg" id="loginBtn">
+          <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+        </button>
+      </form>
+
+      <div class="divider">or</div>
+
+      <div class="text-center">
+        <p class="mb-0 text-muted small">Don't have an account?
+          <a href="/register.html" class="text-brand fw-bold">Create account</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script>
+'use strict';
+// Redirect if already logged in (handling session expiration to prevent infinite loops)
+if (window.location.search.includes('session_expired')) {
+  Auth.clearAuth();
+} else {
+  Auth.redirectIfLoggedIn();
+}
+
+// Theme
+const saved = localStorage.getItem('tp_theme') || 'light';
+document.documentElement.dataset.theme = saved;
+
+// Role tabs
+let selectedRole = 'user';
+document.querySelectorAll('.role-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    selectedRole = tab.dataset.role;
+    document.getElementById('selectedRole').value = selectedRole;
+    document.getElementById('loginEmail').placeholder = 'you@example.com';
+  });
+});
+
+// Password toggle
+document.getElementById('pwToggle').addEventListener('click', function () {
+  const pw = document.getElementById('loginPassword');
+  const icon = this.querySelector('i');
+  if (pw.type === 'password') { pw.type = 'text'; icon.className = 'bi bi-eye-slash'; }
+  else { pw.type = 'password'; icon.className = 'bi bi-eye'; }
+});
+
+// Login form
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email    = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const role     = document.getElementById('selectedRole').value;
+  const btn      = document.getElementById('loginBtn');
+
+  if (!email || !password) {
+    Swal.fire({ icon: 'warning', title: 'Missing fields', text: 'Please enter email and password.', confirmButtonColor: '#0a7c69' });
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing in…';
+
+  try {
+    const res  = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, role })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
+
+    Auth.setAuth(data.token, data.user);
+
+    // Role-based redirect
+    const routes = { admin: '/admin/', user: '/user/', provider: '/provider/' };
+    const dest   = routes[data.user.role] || '/';
+
+    await Swal.fire({
+      icon: 'success', title: `Welcome, ${data.user.name}!`,
+      text: `Redirecting to your ${data.user.role} dashboard…`,
+      timer: 1500, showConfirmButton: false, timerProgressBar: true
+    });
+    window.location.href = dest;
+
+  } catch (err) {
+    Swal.fire({ icon: 'error', title: 'Login Failed', text: err.message, confirmButtonColor: '#0a7c69' });
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Sign In';
+  }
+});
+</script>
+</body>
+</html>

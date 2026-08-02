@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tourism Marketplace — Discover India's Best</title>
+  <meta name="description" content="Explore tourist destinations, book travel packages, connect with local services. Support local communities through digital tourism.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-inner">
+    <span class="loader-globe"><i class="bi bi-globe-americas"></i></span>
+    <p>Loading experiences…</p>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg glass-nav fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+      <div class="brand-mark"><i class="bi bi-globe-americas"></i></div>
+      <span class="brand-text">Tourism<span class="brand-accent">Pro</span></span>
+    </a>
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="bi bi-list fs-4" style="color:var(--ink)"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="#destinations">Destinations</a></li>
+        <li class="nav-item"><a class="nav-link" href="#providers">Top Providers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#packages">Packages</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Reviews</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-icon" id="themeToggle" title="Toggle theme"><i class="bi bi-moon-stars"></i></button>
+        <!-- Guest buttons -->
+        <a href="/login.html"    class="btn btn-outline-brand btn-sm" id="navLoginBtn">Login</a>
+        <a href="/register.html" class="btn btn-brand btn-sm"         id="navRegBtn">Register Free</a>
+        <!-- Logged-in menu (hidden by default) -->
+        <div class="d-none align-items-center gap-2" id="navUserMenu">
+          <a href="#" class="btn btn-brand btn-sm" id="navDashLink"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+          <button class="btn btn-outline-secondary btn-sm" onclick="Auth.logout()"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero-section d-flex align-items-center" style="padding-top:80px">
+  <div class="hero-bg-overlay"></div>
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="hero-content container py-5">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-6">
+        <div class="hero-badge mb-3" data-aos="fade-down">
+          <i class="bi bi-award-fill text-warning"></i> Sustainable &amp; Responsible Tourism
+        </div>
+        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="80">
+          Discover India's<br>
+          <span class="hero-typed" id="typedText"></span>
+        </h1>
+        <p class="hero-lead mt-3 mb-4" data-aos="fade-up" data-aos-delay="160">
+          One marketplace for tourists, local businesses, and destination promoters. Search, book, and explore — all in one place.
+        </p>
+        <div class="d-flex flex-wrap gap-3 mb-4" data-aos="fade-up" data-aos-delay="240">
+          <a href="/register.html" class="btn btn-brand btn-lg px-4">
+            <i class="bi bi-person-plus me-2"></i>Get Started Free
+          </a>
+          <a href="#destinations" class="btn btn-glass btn-lg px-4">
+            <i class="bi bi-compass me-2"></i>Explore Places
+          </a>
+        </div>
+        <div class="hero-stats" data-aos="fade-up" data-aos-delay="320">
+          <div class="hero-stat"><span class="counter" id="statDest" data-count="0">0+</span><small>Destinations</small></div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat"><span class="counter" id="statSvc" data-count="0">0+</span><small>Local Services</small></div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat"><span class="counter" id="statUsr" data-count="0">0+</span><small>Happy Tourists</small></div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat"><span class="counter" id="statEvt" data-count="0">0+</span><small>Events</small></div>
+        </div>
+      </div>
+      <div class="col-lg-5 offset-lg-1" data-aos="fade-left" data-aos-delay="200">
+        <div class="trip-finder">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div><p class="eyebrow mb-0">Quick Search</p><h5 class="fw-bold mb-0">Find Your Destination</h5></div>
+            <span class="badge-live"><i class="bi bi-circle-fill me-1" style="font-size:.5rem"></i>Live</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="input-group">
+                <span class="input-group-text bg-transparent"><i class="bi bi-search text-muted"></i></span>
+                <input type="search" class="form-control" id="heroSearch" placeholder="Where do you want to go?">
+              </div>
+            </div>
+            <div class="col-6">
+              <select class="form-select" id="heroCategory">
+                <option value="all">All Categories</option>
+                <option>Beach</option><option>Hill Station</option><option>Heritage</option><option>Wildlife</option><option>Pilgrimage</option><option>City</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <select class="form-select" id="heroBudget">
+                <option value="all">Any Budget</option>
+                <option value="budget">Below ₹7,000</option>
+                <option value="mid">₹7,000–10,000</option>
+                <option value="premium">Above ₹10,000</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-brand w-100" id="heroSearchBtn">
+                <i class="bi bi-search me-2"></i>Search Destinations
+              </button>
+            </div>
+          </div>
+          <p class="text-muted small mt-3 mb-0 text-center"><i class="bi bi-lock-fill me-1"></i>Login required to make bookings</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#destinations" class="scroll-cue"><i class="bi bi-chevron-double-down"></i></a>
+</section>
+
+<!-- ── DESTINATIONS ── -->
+<section class="section-pad" id="destinations">
+  <div class="container">
+    <div class="section-heading text-center" data-aos="fade-up">
+      <p class="eyebrow">Explore</p>
+      <h2>Popular Destinations</h2>
+      <p class="section-sub mx-auto">Discover India's most breathtaking tourist destinations — beaches, hill stations, heritage sites, wildlife parks, and more.</p>
+    </div>
+    <!-- Filter -->
+    <div class="row g-3 mb-4" data-aos="fade-up" data-aos-delay="80">
+      <div class="col-md-5">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search text-muted"></i></span>
+          <input type="search" class="form-control" id="destinationSearch" placeholder="Search destinations…">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chip-group" id="categoryFilters"></div>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select sort-select w-100" id="sortSelect">
+          <option value="featured">Featured</option>
+          <option value="rating">Highest Rated</option>
+          <option value="priceLow">Price: Low → High</option>
+          <option value="priceHigh">Price: High → Low</option>
+        </select>
+      </div>
+    </div>
+    <div class="row g-4" id="destinationGrid">
+      <div class="col-md-6 col-xl-4 skeleton-col"><div class="skeleton-card"></div></div>
+      <div class="col-md-6 col-xl-4 skeleton-col"><div class="skeleton-card"></div></div>
+      <div class="col-md-6 col-xl-4 skeleton-col"><div class="skeleton-card"></div></div>
+    </div>
+    <div class="empty-state d-none" id="emptyState">
+      <i class="bi bi-binoculars"></i><h3>No destinations found</h3>
+      <p>Try adjusting your search or category filter.</p>
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a href="/login.html" class="btn btn-outline-brand px-5">
+        <i class="bi bi-calendar2-check me-2"></i>Login to Book Your Trip
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOP PROVIDERS ── -->
+<section class="section-pad soft-section" id="providers">
+  <div class="container">
+    <div class="section-heading text-center" data-aos="fade-up">
+      <p class="eyebrow">Local Business</p>
+      <h2>Top Service Providers</h2>
+      <p class="section-sub mx-auto">Connecting you directly with the best local businesses. Supporting the local economy by empowering local entrepreneurs.</p>
+    </div>
+    <div class="row justify-content-center g-4" id="providersGrid">
+      <!-- Injected by JS -->
+      <div class="col-12 text-center text-muted"><div class="spinner-border text-brand"></div></div>
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a href="/register.html?role=provider" class="btn btn-brand px-5">
+        <i class="bi bi-shop-window me-2"></i>Register Your Business
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PACKAGES ── -->
+<section class="section-pad" id="packages">
+  <div class="container">
+    <div class="row align-items-end mb-4">
+      <div class="col-lg-7" data-aos="fade-up">
+        <p class="eyebrow">Curated</p>
+        <h2 class="section-heading" style="margin-bottom:0">Travel Packages</h2>
+      </div>
+      <div class="col-lg-5 text-lg-end mt-3 mt-lg-0" data-aos="fade-up" data-aos-delay="80">
+        <a href="/login.html" class="btn btn-outline-brand">
+          <i class="bi bi-calendar2-plus me-2"></i>Login to Book
+        </a>
+      </div>
+    </div>
+    <div class="swiper packageSwiper" data-aos="fade-up" data-aos-delay="120">
+      <div class="swiper-wrapper" id="swiperWrapper"></div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section-pad soft-section" id="testimonials">
+  <div class="container">
+    <div class="section-heading text-center" data-aos="fade-up">
+      <p class="eyebrow">Verified Reviews</p>
+      <h2>What Tourists Are Saying</h2>
+    </div>
+    <div class="row justify-content-center g-4" id="reviewsGrid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA STRIP ── -->
+<section class="section-pad" id="impact" style="background:var(--brand);color:#fff">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center" data-aos="fade-up">
+        <p class="text-warning fw-bold text-uppercase" style="letter-spacing:1px">Join Us Today</p>
+        <h2 class="text-white">Start Your Journey with TourismPro</h2>
+        <p class="mt-2 mb-4" style="color:rgba(255,255,255,.8)">Create a free account and access all features — booking, reviews, service listings, and more. Supporting communities through digital tourism.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="/register.html" class="btn btn-light btn-lg px-5 text-brand fw-bold"><i class="bi bi-person-plus me-2"></i>Create Free Account</a>
+          <a href="/login.html"    class="btn btn-outline-light btn-lg px-5"><i class="bi bi-box-arrow-in-right me-2"></i>Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-md-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div class="brand-mark"><i class="bi bi-globe-americas"></i></div>
+          <span style="font-size:1.2rem;font-weight:800;color:#fff">TourismPro</span>
+        </div>
+        <p style="color:rgba(255,255,255,.65);font-size:.9rem">A centralized digital platform promoting tourism and empowering local communities through technology.</p>
+      </div>
+      <div class="col-md-2 col-6">
+        <h6 class="text-white fw-bold mb-3">Explore</h6>
+        <div class="footer-links">
+          <a href="#destinations"><i class="bi bi-chevron-right"></i>Destinations</a>
+          <a href="#providers"><i class="bi bi-chevron-right"></i>Providers</a>
+          <a href="#packages"><i class="bi bi-chevron-right"></i>Packages</a>
+        </div>
+      </div>
+      <div class="col-md-2 col-6">
+        <h6 class="text-white fw-bold mb-3">Account</h6>
+        <div class="footer-links">
+          <a href="/login.html"><i class="bi bi-chevron-right"></i>Login</a>
+          <a href="/register.html"><i class="bi bi-chevron-right"></i>Register</a>
+          <a href="/user/"><i class="bi bi-chevron-right"></i>Tourist Dashboard</a>
+          <a href="/provider/"><i class="bi bi-chevron-right"></i>Provider Panel</a>
+          <a href="/admin/"><i class="bi bi-chevron-right"></i>Admin Panel</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h6 class="text-white fw-bold mb-3">About</h6>
+        <p style="color:rgba(255,255,255,.58);font-size:.85rem">This project is built with Node.js, Express, MySQL and a modern Bootstrap frontend. Developed to promote tourism and support local communities.</p>
+      </div>
+    </div>
+    <hr style="border-color:rgba(255,255,255,.08);margin:2rem 0 1.5rem">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p style="color:rgba(255,255,255,.45);font-size:.82rem;margin:0">© 2026 TourismPro. All rights reserved.</p>
+      <div class="d-flex gap-2">
+        <a href="#" style="color:rgba(255,255,255,.4);font-size:1.1rem"><i class="bi bi-facebook"></i></a>
+        <a href="#" style="color:rgba(255,255,255,.4);font-size:1.1rem"><i class="bi bi-instagram"></i></a>
+        <a href="#" style="color:rgba(255,255,255,.4);font-size:1.1rem"><i class="bi bi-twitter-x"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" title="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>
