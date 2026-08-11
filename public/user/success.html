@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Booking Confirmed! — TourismPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+  <style>
+    .success-container {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 20px;
+    }
+    .success-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem 2.5rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: cardIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .check-icon-wrapper {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.1);
+      color: #16a34a;
+      display: grid;
+      place-items: center;
+      font-size: 2.8rem;
+      margin: 0 auto 1.5rem;
+      animation: scaleUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes scaleUp {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+    .receipt-details {
+      text-align: left;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin: 2rem 0;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.65rem;
+      font-size: 0.9rem;
+    }
+    .receipt-row:last-child {
+      margin-bottom: 0;
+    }
+    .receipt-divider {
+      border-top: 1px dashed var(--line);
+      margin: 1rem 0;
+    }
+    .receipt-total {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--brand);
+    }
+    .btn-action-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    @media (max-width: 576px) {
+      .success-card {
+        padding: 2rem 1.25rem 1.75rem;
+      }
+      .btn-action-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body style="background: var(--soft); min-height: 100vh; display: flex; align-items: center;">
+
+  <div class="container success-container">
+    <div class="success-card">
+      <div class="check-icon-wrapper">
+        <i class="bi bi-patch-check-fill"></i>
+      </div>
+      
+      <h2 class="fw-bold mb-2">Booking Confirmed!</h2>
+      <p class="text-muted mb-4">Thank you for booking with TourismPro. Your payment was successful and your trip is officially confirmed.</p>
+      
+      <div id="loadingReceipt" class="py-4">
+        <div class="spinner-border text-brand" role="status"></div>
+        <p class="text-muted small mt-2">Generating your digital receipt…</p>
+      </div>
+
+      <div id="receiptContent" class="d-none">
+        <div class="receipt-details">
+          <div class="receipt-row">
+            <span class="text-muted">Booking Reference</span>
+            <strong id="refBooking">—</strong>
+          </div>
+          <div class="receipt-row">
+            <span class="text-muted">Payment Reference</span>
+            <span id="refPayment">—</span>
+          </div>
+          <div class="receipt-row">
+            <span class="text-muted">Booking Status</span>
+            <span class="badge bg-success-subtle text-success fw-bold">Confirmed</span>
+          </div>
+          
+          <div class="receipt-divider"></div>
+          
+          <div class="receipt-row">
+            <span class="text-muted">Destination</span>
+            <strong id="recDest">—</strong>
+          </div>
+          <div class="receipt-row">
+            <span class="text-muted">Travel Date</span>
+            <span id="recDate">—</span>
+          </div>
+          <div class="receipt-row">
+            <span class="text-muted">Travelers</span>
+            <span id="recGuests">0</span>
+          </div>
+          
+          <div class="receipt-divider"></div>
+          
+          <div class="receipt-row">
+            <span class="text-muted">Hotel</span>
+            <span id="recHotel">None</span>
+          </div>
+          <div class="receipt-row">
+            <span class="text-muted">Transport</span>
+            <span id="recTransport">None</span>
+          </div>
+          
+          <div class="receipt-row mt-2 flex-column align-items-start gap-1">
+            <span class="text-muted">Local Services:</span>
+            <div id="recServices" class="ps-2 text-muted small w-100">None</div>
+          </div>
+          
+          <div class="receipt-divider"></div>
+          
+          <div class="receipt-row align-items-center">
+            <span class="fw-bold text-dark">Amount Paid</span>
+            <span id="recTotal" class="receipt-total">₹0</span>
+          </div>
+        </div>
+        
+        <div class="btn-action-group">
+          <a href="/user/" class="btn btn-brand px-4 py-2"><i class="bi bi-speedometer2 me-2"></i>Go to Dashboard</a>
+          <button onclick="window.print()" class="btn btn-outline-secondary px-4 py-2"><i class="bi bi-printer me-2"></i>Print Receipt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/auth.js"></script>
+  <script>
+    'use strict';
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Theme matching
+      const savedTheme = localStorage.getItem('tp_theme') || 'light';
+      document.documentElement.dataset.theme = savedTheme;
+
+      // Force authenticate
+      if (!Auth.isLoggedIn()) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const bookingId = params.get('booking_id');
+      
+      if (!bookingId) {
+        window.location.href = '/user/';
+        return;
+      }
+
+      try {
+        const res = await Auth.authFetch(`/api/bookings/${bookingId}`);
+        if (!res || !res.ok) {
+          throw new Error('Could not load booking receipt.');
+        }
+        
+        const booking = await res.json();
+        
+        // Populate UI
+        document.getElementById('refBooking').textContent = `BK-${booking.id}`;
+        document.getElementById('refPayment').textContent = booking.payment_ref || 'N/A';
+        document.getElementById('recDest').textContent = booking.dest_name || booking.destination;
+        document.getElementById('recDate').textContent = new Date(booking.travel_date).toLocaleDateString(undefined, {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        document.getElementById('recGuests').textContent = `${booking.guests} Guest${booking.guests > 1 ? 's' : ''}`;
+        
+        // Resolve hotel and transport from booking services if any
+        let hotelName = 'None';
+        let transportName = 'None';
+        const otherServicesList = [];
+        
+        if (Array.isArray(booking.services)) {
+          booking.services.forEach(s => {
+            if (['Hotel', 'Resort', 'Homestay'].includes(s.type)) {
+              hotelName = s.service_name;
+            } else if (['Taxi', 'Transportation', 'Transport'].includes(s.type)) {
+              transportName = s.service_name;
+            } else {
+              otherServicesList.push(s.service_name);
+            }
+          });
+        }
+        
+        document.getElementById('recHotel').textContent = hotelName;
+        document.getElementById('recTransport').textContent = transportName;
+        
+        const recServicesEl = document.getElementById('recServices');
+        if (otherServicesList.length > 0) {
+          recServicesEl.innerHTML = otherServicesList.map(name => `• ${name}`).join('<br>');
+        } else {
+          recServicesEl.innerHTML = 'None';
+        }
+        
+        const fmtPrice = `₹ ${Number(booking.payment_amount).toLocaleString('en-IN')}`;
+        document.getElementById('recTotal').textContent = fmtPrice;
+        
+        // Hide loader & show content
+        document.getElementById('loadingReceipt').classList.add('d-none');
+        document.getElementById('receiptContent').classList.remove('d-none');
+        
+      } catch (err) {
+        console.error(err);
+        document.getElementById('loadingReceipt').innerHTML = `
+          <div class="text-danger fs-1 mb-2"><i class="bi bi-exclamation-octagon-fill"></i></div>
+          <p class="text-danger fw-bold">Error loading receipt</p>
+          <p class="text-muted small">We could not retrieve the receipt detail. Please navigate to your dashboard bookings history to review details.</p>
+          <a href="/user/" class="btn btn-outline-brand btn-sm mt-3">Back to Dashboard</a>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
