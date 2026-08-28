@@ -1,0 +1,215 @@
+% ===================== CHAPTER 6 : SYSTEM TESTING =====================
+\chapter{SYSTEM TESTING}
+
+\section{Testing Overview}
+
+System testing is a critical phase in the software development lifecycle that validates whether the developed system meets its specified requirements and functions correctly under various conditions. For the Tourism Promotion Website, a comprehensive testing strategy was employed covering multiple levels of testing to ensure reliability, security, usability, and performance.
+
+The testing process was conducted across four key levels:
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Unit Testing:} Individual modules and functions were tested in isolation.
+    \item \textbf{Integration Testing:} Interactions between modules were verified.
+    \item \textbf{Validation Testing:} The system was validated against functional requirements.
+    \item \textbf{User Acceptance Testing (UAT):} End-user testing to confirm usability and satisfaction.
+\end{enumerate}
+
+Testing was performed using a combination of manual testing with browser-based interaction, API testing using \textbf{Postman}, and database verification through \textbf{MySQL Workbench}.
+
+\section{Test Plan}
+
+\subsection{Unit Testing}
+
+Unit testing focused on verifying individual components and functions of the application in isolation. Each API route module was tested independently to ensure correct behavior.
+
+\begin{longtable}{|p{0.5cm}|p{3.5cm}|p{5cm}|p{3.5cm}|}
+\hline
+\textbf{No.} & \textbf{Module} & \textbf{Test Case} & \textbf{Expected Result} \\
+\hline
+\endfirsthead
+\hline
+\textbf{No.} & \textbf{Module} & \textbf{Test Case} & \textbf{Expected Result} \\
+\hline
+\endhead
+1 & Authentication & Register user with valid data & User created, JWT returned \\
+\hline
+2 & Authentication & Register with existing email & 409 Conflict error \\
+\hline
+3 & Authentication & Login with correct credentials & JWT token and user data returned \\
+\hline
+4 & Authentication & Login with wrong password & 401 Unauthorized error \\
+\hline
+5 & Authentication & Login with wrong role & 403 Forbidden error \\
+\hline
+6 & Authentication & Access protected route without token & 401 Authentication required \\
+\hline
+7 & Destinations & Create destination (admin) & Destination record created \\
+\hline
+8 & Destinations & List all destinations & Array of destinations returned \\
+\hline
+9 & Bookings & Create booking with valid data & Booking record with Pending status \\
+\hline
+10 & Bookings & Update booking status & Status changed to Confirmed \\
+\hline
+11 & Services & Create service listing & Service record created \\
+\hline
+12 & Services & List services by destination & Filtered services returned \\
+\hline
+13 & Reviews & Submit review with rating & Review record created \\
+\hline
+14 & Payments & Process payment with valid card & Payment reference generated \\
+\hline
+15 & Wishlists & Add destination to wishlist & Wishlist entry created \\
+\hline
+16 & Wishlists & Add duplicate wishlist entry & Ignored (INSERT IGNORE) \\
+\hline
+17 & Providers & Create provider profile & Profile with pending status \\
+\hline
+18 & Notifications & Create admin notification & Notification record created \\
+\hline
+\end{longtable}
+
+\subsection{Integration Testing}
+
+Integration testing verified the correct interaction between multiple modules and the database layer.
+
+\begin{longtable}{|p{0.5cm}|p{4cm}|p{4.5cm}|p{3.5cm}|}
+\hline
+\textbf{No.} & \textbf{Integration Point} & \textbf{Test Case} & \textbf{Expected Result} \\
+\hline
+\endfirsthead
+\hline
+\textbf{No.} & \textbf{Integration Point} & \textbf{Test Case} & \textbf{Expected Result} \\
+\hline
+\endhead
+1 & Auth $\rightarrow$ Session & Login creates session; dashboard accessible & Dashboard loads for authenticated user \\
+\hline
+2 & Auth $\rightarrow$ Middleware & JWT token validates role-based access & Admin routes reject non-admin tokens \\
+\hline
+3 & Booking $\rightarrow$ Payment & Complete booking triggers payment flow & Payment record linked to booking \\
+\hline
+4 & Provider $\rightarrow$ Service & Provider creates service linked to profile & Service shows provider\_id correctly \\
+\hline
+5 & Admin $\rightarrow$ Provider & Admin approves provider status & Provider status changes to approved \\
+\hline
+6 & Destination $\rightarrow$ Package & Package references destination\_id & Package displays correct destination \\
+\hline
+7 & Booking $\rightarrow$ Services & Booking attaches selected services & booking\_services junction populated \\
+\hline
+8 & Register $\rightarrow$ Notification & Provider registration notifies admin & Admin notification record created \\
+\hline
+9 & Wishlist $\rightarrow$ Destination & Wishlist JOIN returns destination data & Full destination details in wishlist \\
+\hline
+10 & Session $\rightarrow$ Route Guard & Unauthenticated dashboard access & Redirected to login page \\
+\hline
+\end{longtable}
+
+\subsection{Validation Testing}
+
+Validation testing ensured that the system meets all functional requirements specified in the requirements document.
+
+\begin{longtable}{|p{0.5cm}|p{4.5cm}|p{4cm}|p{3.5cm}|}
+\hline
+\textbf{No.} & \textbf{Requirement} & \textbf{Validation Method} & \textbf{Result} \\
+\hline
+\endfirsthead
+\hline
+\textbf{No.} & \textbf{Requirement} & \textbf{Validation Method} & \textbf{Result} \\
+\hline
+\endhead
+1 & Three-tier role-based access & Login as admin, user, provider & Each role accesses correct dashboard \\
+\hline
+2 & Secure authentication & Attempt access without token & Unauthorized response returned \\
+\hline
+3 & Destination CRUD & Create, edit, delete destination & All operations successful \\
+\hline
+4 & Booking lifecycle & Create, confirm, complete, cancel & Status transitions work correctly \\
+\hline
+5 & Provider approval workflow & Register provider, admin approves & Provider gains dashboard access \\
+\hline
+6 & Payment processing & Submit payment for booking & Payment reference generated \\
+\hline
+7 & Review submission & Submit review with rating & Review visible on destination page \\
+\hline
+8 & Wishlist management & Add and remove destinations & Wishlist updates correctly \\
+\hline
+9 & Responsive design & Test on mobile, tablet, desktop & Layout adapts to all viewports \\
+\hline
+10 & Dark/Light theme & Toggle theme switch & Theme changes consistently \\
+\hline
+\end{longtable}
+
+\subsection{User Acceptance Testing}
+
+User Acceptance Testing (UAT) was conducted with a group of sample users representing each role to evaluate usability, intuitiveness, and overall satisfaction.
+
+\textbf{UAT Participants:}
+\begin{itemize}[leftmargin=2em]
+    \item 3 users testing as Tourists
+    \item 2 users testing as Service Providers
+    \item 1 user testing as Administrator
+\end{itemize}
+
+\textbf{UAT Criteria and Results:}
+
+\begin{longtable}{|p{0.5cm}|p{4.5cm}|p{4cm}|p{3.5cm}|}
+\hline
+\textbf{No.} & \textbf{Criteria} & \textbf{Feedback} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{No.} & \textbf{Criteria} & \textbf{Feedback} & \textbf{Status} \\
+\hline
+\endhead
+1 & Registration process clarity & Easy to understand and complete & Accepted \\
+\hline
+2 & Destination browsing experience & Visually appealing, smooth animations & Accepted \\
+\hline
+3 & Booking workflow intuitiveness & Clear step-by-step process & Accepted \\
+\hline
+4 & Provider service listing & Simple form, easy to manage & Accepted \\
+\hline
+5 & Admin dashboard usability & Comprehensive, well-organized & Accepted \\
+\hline
+6 & Mobile responsiveness & Works well on smartphones & Accepted \\
+\hline
+7 & Theme toggle functionality & Smooth transition, consistent colors & Accepted \\
+\hline
+8 & Overall visual design & Modern, premium feel & Accepted \\
+\hline
+\end{longtable}
+
+\section{Test Results and Analysis}
+
+\textbf{Summary of Test Results:}
+
+\begin{longtable}{|p{4.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\textbf{Testing Level} & \textbf{Total Tests} & \textbf{Passed} & \textbf{Pass Rate} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Testing Level} & \textbf{Total Tests} & \textbf{Passed} & \textbf{Pass Rate} \\
+\hline
+\endhead
+Unit Testing & 18 & 18 & 100\% \\
+\hline
+Integration Testing & 10 & 10 & 100\% \\
+\hline
+Validation Testing & 10 & 10 & 100\% \\
+\hline
+User Acceptance Testing & 8 & 8 & 100\% \\
+\hline
+\textbf{Overall} & \textbf{46} & \textbf{46} & \textbf{100\%} \\
+\hline
+\end{longtable}
+
+\textbf{Analysis:}
+\begin{itemize}[leftmargin=2em]
+    \item All test cases across all four testing levels passed successfully, demonstrating that the system meets its functional and non-functional requirements.
+    \item The role-based access control system was verified to correctly isolate user functionalities, preventing unauthorized access across roles.
+    \item The authentication layer (JWT + sessions) was confirmed to provide secure access with proper token validation and session management.
+    \item The booking-to-payment integration workflow was validated end-to-end, confirming correct data flow across modules.
+    \item The responsive design was verified on Chrome, Firefox, and Edge browsers across desktop, tablet, and mobile viewports.
+    \item User feedback during UAT was positive, with particular appreciation for the visual design, theme toggling, and smooth animations.
+    \item Minor UI adjustments were made based on UAT feedback, including improved form validation messages and mobile navigation refinements.
+\end{itemize}

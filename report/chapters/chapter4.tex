@@ -1,0 +1,213 @@
+% ===================== CHAPTER 4 : SYSTEM SPECIFICATION =====================
+\chapter{SYSTEM SPECIFICATION}
+
+\section{Software and Hardware Requirements}
+
+\textbf{Software Requirements:}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+\endhead
+Operating System & Windows 10/11, macOS, or Linux (Ubuntu 20.04+) \\
+\hline
+Runtime Environment & Node.js v18.x or higher \\
+\hline
+Package Manager & npm v9.x or higher \\
+\hline
+Database Server & MySQL 8.0 or higher \\
+\hline
+Web Browser & Google Chrome 100+, Mozilla Firefox 100+, Microsoft Edge 100+, or Safari 15+ \\
+\hline
+Code Editor & Visual Studio Code (recommended) or any text editor \\
+\hline
+Version Control & Git 2.x \\
+\hline
+Server Framework & Express.js v4.19.2 \\
+\hline
+Authentication & JSON Web Token (jsonwebtoken v9.0.3) \\
+\hline
+Password Hashing & bcryptjs v3.0.3 \\
+\hline
+Session Management & express-session v1.19.0 \\
+\hline
+File Upload & Multer v2.2.0 \\
+\hline
+Database Driver & mysql2 v3.9.7 \\
+\hline
+Environment Config & dotenv v16.4.5 \\
+\hline
+CORS Middleware & cors v2.8.5 \\
+\hline
+Front-End Framework & Bootstrap 5.3.3 \\
+\hline
+Animations Library & AOS (Animate On Scroll) v2.3.4 \\
+\hline
+Carousel Library & Swiper.js v11 \\
+\hline
+Icon Library & Bootstrap Icons v1.11.3 \\
+\hline
+Font & Google Fonts --- Outfit (300--900 weights) \\
+\hline
+\end{longtable}
+
+\textbf{Hardware Requirements:}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Component} & \textbf{Minimum Specification} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Component} & \textbf{Minimum Specification} \\
+\hline
+\endhead
+Processor & Intel Core i3 / AMD Ryzen 3 or equivalent \\
+\hline
+RAM & 4 GB (8 GB recommended) \\
+\hline
+Storage & 500 MB free disk space for application; 1 GB+ for database \\
+\hline
+Network & Active internet connection for CDN resources and API access \\
+\hline
+Display & 1366 $\times$ 768 minimum resolution \\
+\hline
+\end{longtable}
+
+\section{Functional Specifications}
+
+The functional specifications define the key operations and behaviors of the Tourism Promotion Website:
+
+\textbf{1. User Authentication and Authorization}
+\begin{itemize}[leftmargin=2em]
+    \item User registration with name, email, password, phone, and role selection (Tourist / Service Provider).
+    \item Secure login with email, password, and role verification.
+    \item JWT token generation with 7-day expiry for API authentication.
+    \item Server-side session management with Express sessions for dashboard route protection.
+    \item Password hashing using bcrypt with salt rounds of 10.
+    \item Role-based access control: Admin, User (Tourist), Provider.
+    \item Provider accounts start with ``pending'' status and require admin approval.
+    \item Account suspension and activation by administrators.
+    \item Session-based logout with cookie clearing.
+\end{itemize}
+
+\textbf{2. Destination Management}
+\begin{itemize}[leftmargin=2em]
+    \item CRUD operations for destinations (Create, Read, Update, Delete).
+    \item Destination attributes: name, location, district, state, category, price, rating, image, description, highlights, season, budget range, featured status, nearby attractions, and gallery.
+    \item Category classification: Hill Station, Beach, Heritage, Wildlife, Pilgrimage.
+    \item Featured destination tagging for homepage promotion.
+    \item Search and filter by category, location, and budget.
+\end{itemize}
+
+\textbf{3. Travel Package Management}
+\begin{itemize}[leftmargin=2em]
+    \item Package creation linked to specific destinations.
+    \item Package attributes: title, destination, duration (days), price, image, and description.
+    \item Package browsing and booking by tourists.
+\end{itemize}
+
+\textbf{4. Service Provider Management}
+\begin{itemize}[leftmargin=2em]
+    \item Provider profile registration with business name, owner name, phone, address, license number, description, and profile image.
+    \item Service listing with type (Hotel, Guide, Taxi, Restaurant, Handicraft), location, pricing (fixed or per-km), capacity, operating hours, images, and cancellation policy.
+    \item Admin approval/rejection workflow for provider accounts and service listings.
+    \item Provider dashboard for managing services, viewing bookings, and tracking engagement.
+\end{itemize}
+
+\textbf{5. Booking System}
+\begin{itemize}[leftmargin=2em]
+    \item Booking creation with tourist name, contact, destination, package, travel date, guest count, distance, and special requests.
+    \item Booking status lifecycle: Pending $\rightarrow$ Confirmed $\rightarrow$ Completed / Cancelled.
+    \item Service attachment to bookings through a junction table (booking\_services).
+    \item Distance-based pricing calculation for transport services.
+\end{itemize}
+
+\textbf{6. Payment System}
+\begin{itemize}[leftmargin=2em]
+    \item Simulated card-based payment processing.
+    \item Unique payment reference generation.
+    \item Payment status tracking: Unpaid, Paid, Refunded.
+    \item Payment history linked to bookings.
+\end{itemize}
+
+\textbf{7. Review and Rating System}
+\begin{itemize}[leftmargin=2em]
+    \item Star rating (1--5) with textual comments.
+    \item Reviews linked to destinations, services, packages, and users.
+    \item Public review display on destination pages.
+\end{itemize}
+
+\textbf{8. Wishlist System}
+\begin{itemize}[leftmargin=2em]
+    \item Add/remove destinations from personal wishlist.
+    \item Unique constraint preventing duplicate wishlist entries.
+    \item Wishlist viewing with full destination details.
+\end{itemize}
+
+\textbf{9. Notification System}
+\begin{itemize}[leftmargin=2em]
+    \item In-app notifications for admins (new provider registrations, booking updates).
+    \item Read/unread status tracking.
+    \item Notification listing with type, title, and message.
+\end{itemize}
+
+\textbf{10. Analytics Dashboard}
+\begin{itemize}[leftmargin=2em]
+    \item Booking trend analysis and revenue metrics.
+    \item Popular destination tracking.
+    \item User activity and registration statistics.
+    \item Service provider performance metrics.
+\end{itemize}
+
+\section{Tools and Platforms Used}
+
+\begin{longtable}{|p{4cm}|p{3.5cm}|p{5.5cm}|}
+\hline
+\textbf{Tool / Platform} & \textbf{Category} & \textbf{Purpose} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Tool / Platform} & \textbf{Category} & \textbf{Purpose} \\
+\hline
+\endhead
+Node.js & Runtime & Server-side JavaScript execution environment \\
+\hline
+Express.js & Framework & Web application framework for routing and middleware \\
+\hline
+MySQL & Database & Relational database for data persistence \\
+\hline
+HTML5 & Markup & Structuring web pages and content \\
+\hline
+CSS3 & Styling & Visual design, animations, and responsive layouts \\
+\hline
+JavaScript (ES6+) & Programming & Client-side interactivity and API communication \\
+\hline
+Bootstrap 5 & UI Framework & Responsive grid system, components, and utilities \\
+\hline
+Bootstrap Icons & Icon Library & User interface icons \\
+\hline
+Google Fonts (Outfit) & Typography & Modern, variable-weight web font \\
+\hline
+AOS & Animation & Scroll-triggered element animations \\
+\hline
+Swiper.js & Carousel & Touch-enabled slider for destinations and packages \\
+\hline
+Visual Studio Code & IDE & Code editing, debugging, and terminal integration \\
+\hline
+Git & Version Control & Source code versioning and collaboration \\
+\hline
+npm & Package Manager & Dependency management and script execution \\
+\hline
+Postman & API Testing & Testing and documenting RESTful API endpoints \\
+\hline
+MySQL Workbench & Database Tool & Database design, query execution, and management \\
+\hline
+Google Chrome DevTools & Debugging & Front-end debugging, network analysis, responsive testing \\
+\hline
+\end{longtable}

@@ -1,0 +1,293 @@
+% ===================== CHAPTER 5 : SYSTEM DESIGN =====================
+\chapter{SYSTEM DESIGN}
+
+\section{Module Description}
+
+The Tourism Promotion Website is organized into the following functional modules, each implemented as a separate Express.js route module with dedicated API endpoints:
+
+\textbf{1. Authentication Module} (\texttt{routes/auth.js})
+\begin{itemize}[leftmargin=2em]
+    \item Handles user registration, login, logout, and session management.
+    \item Implements JWT token generation and verification.
+    \item Manages user profiles, account status (active/pending/suspended), and role-based access.
+    \item Provides admin endpoints for user listing, status updates, and account deletion.
+    \item Manages tourist wishlists (add, remove, list).
+\end{itemize}
+
+\textbf{2. Destination Module} (\texttt{routes/destinations.js})
+\begin{itemize}[leftmargin=2em]
+    \item CRUD operations for tourist destinations.
+    \item Supports filtering by category, location, season, and budget range.
+    \item Manages destination images, galleries, highlights, and featured status.
+    \item Links destinations to packages, services, and reviews.
+\end{itemize}
+
+\textbf{3. Booking Module} (\texttt{routes/bookings.js})
+\begin{itemize}[leftmargin=2em]
+    \item Creates and manages booking records with full lifecycle tracking.
+    \item Supports status transitions: Pending $\rightarrow$ Confirmed $\rightarrow$ Completed / Cancelled.
+    \item Handles guest count, travel dates, distance-based calculations, and special requests.
+    \item Links bookings to destinations, packages, and selected services.
+    \item Manages the booking\_services junction table for service attachments.
+\end{itemize}
+
+\textbf{4. Services Module} (\texttt{routes/services.js})
+\begin{itemize}[leftmargin=2em]
+    \item CRUD operations for local service listings.
+    \item Supports multiple service types: Hotel, Guide, Taxi, Restaurant, Handicraft.
+    \item Manages fixed and per-kilometer pricing models.
+    \item Handles provider-specific service management with admin approval workflow.
+    \item Stores service metadata: capacity, operating hours, images, cancellation policy.
+\end{itemize}
+
+\textbf{5. Reviews Module} (\texttt{routes/reviews.js})
+\begin{itemize}[leftmargin=2em]
+    \item Creates and retrieves user reviews with star ratings (1--5) and comments.
+    \item Links reviews to destinations, services, packages, and user accounts.
+    \item Supports public and user-specific review listing.
+\end{itemize}
+
+\textbf{6. Events Module} (\texttt{routes/events.js})
+\begin{itemize}[leftmargin=2em]
+    \item CRUD operations for cultural events and local festivals.
+    \item Event attributes include title, location, date, and description.
+    \item Supports chronological listing and destination-based filtering.
+\end{itemize}
+
+\textbf{7. Packages Module} (\texttt{routes/packages.js})
+\begin{itemize}[leftmargin=2em]
+    \item CRUD operations for curated travel packages.
+    \item Links packages to specific destinations with duration and pricing.
+    \item Supports package browsing and booking integration.
+\end{itemize}
+
+\textbf{8. Providers Module} (\texttt{routes/providers.js})
+\begin{itemize}[leftmargin=2em]
+    \item Manages service provider profiles (business name, owner, phone, address, license, description, image).
+    \item Admin approval/rejection workflow for provider accounts.
+    \item Provider dashboard data aggregation.
+\end{itemize}
+
+\textbf{9. Notifications Module} (\texttt{routes/notifications.js})
+\begin{itemize}[leftmargin=2em]
+    \item Creates in-app notifications for admin alerts and user updates.
+    \item Manages read/unread status.
+    \item Supports notification listing and dismissal.
+\end{itemize}
+
+\textbf{10. Analytics Module} (\texttt{routes/analytics.js})
+\begin{itemize}[leftmargin=2em]
+    \item Aggregates booking statistics, revenue metrics, and user activity data.
+    \item Provides popular destination rankings and trend analysis.
+    \item Supports admin dashboard visualization.
+\end{itemize}
+
+\textbf{11. Payments Module} (\texttt{routes/payments.js})
+\begin{itemize}[leftmargin=2em]
+    \item Simulated card-based payment processing.
+    \item Generates unique payment references.
+    \item Tracks payment status (Unpaid, Paid, Refunded) and links to bookings.
+\end{itemize}
+
+\textbf{12. Uploads Module} (\texttt{routes/uploads.js})
+\begin{itemize}[leftmargin=2em]
+    \item Handles file upload via Multer middleware.
+    \item Stores uploaded images for service providers, destinations, and profiles.
+    \item Returns public URLs for uploaded assets.
+\end{itemize}
+
+\textbf{13. Wishlists Module} (\texttt{routes/wishlists.js})
+\begin{itemize}[leftmargin=2em]
+    \item Add/remove destinations from personal wishlists.
+    \item Retrieves wishlist items with full destination details via JOIN queries.
+    \item Enforces unique constraints per user-destination pair.
+\end{itemize}
+
+\section{Data Design}
+
+The database design uses a \textbf{MySQL relational database} (\texttt{tourism\_db}) with the following entity-relationship structure:
+
+\textbf{Database Tables:}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{6.5cm}|}
+\hline
+\textbf{Table} & \textbf{Primary Key} & \textbf{Description} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Table} & \textbf{Primary Key} & \textbf{Description} \\
+\hline
+\endhead
+users & id (INT, AI) & Stores user accounts with name, email, hashed password, role (user/admin/provider), phone, and status \\
+\hline
+destinations & id (VARCHAR) & Tourist destinations with name, location, category, price, rating, images, highlights, season, budget, and featured flag \\
+\hline
+services & id (VARCHAR) & Local service listings with type, location, pricing model (fixed/per\_km), provider link, status, capacity, and policies \\
+\hline
+packages & id (VARCHAR) & Curated travel packages linked to destinations with duration, price, and description \\
+\hline
+events & id (INT, AI) & Cultural events with title, location, date, and description \\
+\hline
+bookings & id (INT, AI) & Booking records with tourist details, destination, package, dates, guests, distance, status, and payment info \\
+\hline
+reviews & id (INT, AI) & User reviews with ratings and comments linked to destinations, services, packages, and users \\
+\hline
+provider\_profiles & id (INT, AI) & Service provider business profiles with business name, owner, contact, license, and approval status \\
+\hline
+booking\_services & id (INT, AI) & Junction table linking bookings to selected services with provider and pricing \\
+\hline
+notifications & id (INT, AI) & In-app notifications with user link, type, title, message, and read status \\
+\hline
+wishlists & id (INT, AI) & User wishlist entries linking users to destinations with unique constraint \\
+\hline
+payments & id (INT, AI) & Payment records with booking link, amount, card holder, reference, and status \\
+\hline
+\end{longtable}
+
+\textbf{Key Relationships:}
+\begin{itemize}[leftmargin=2em]
+    \item \texttt{services.provider\_id} $\rightarrow$ \texttt{users.id} (Service Provider ownership)
+    \item \texttt{services.destination\_id} $\rightarrow$ \texttt{destinations.id} (Service location)
+    \item \texttt{packages.destination\_id} $\rightarrow$ \texttt{destinations.id} (Package destination)
+    \item \texttt{reviews.destination\_id} $\rightarrow$ \texttt{destinations.id} (Review target)
+    \item \texttt{reviews.user\_id} $\rightarrow$ \texttt{users.id} (Review author)
+    \item \texttt{provider\_profiles.user\_id} $\rightarrow$ \texttt{users.id} (Provider account link)
+    \item \texttt{booking\_services.booking\_id} $\rightarrow$ \texttt{bookings.id} (Booking-service junction)
+    \item \texttt{notifications.user\_id} $\rightarrow$ \texttt{users.id} (Notification recipient)
+    \item \texttt{wishlists.user\_id} $\rightarrow$ \texttt{users.id} (Wishlist owner)
+    \item \texttt{payments.booking\_id} $\rightarrow$ \texttt{bookings.id} (Payment-booking link)
+\end{itemize}
+
+\textbf{Database Indexes:}
+\begin{itemize}[leftmargin=2em]
+    \item \texttt{idx\_services\_destination} on \texttt{services(destination\_id)}
+    \item \texttt{idx\_services\_provider} on \texttt{services(provider\_id)}
+    \item \texttt{idx\_services\_status} on \texttt{services(status)}
+    \item \texttt{idx\_bookings\_user} on \texttt{bookings(user\_id)}
+    \item \texttt{idx\_bookings\_status} on \texttt{bookings(status)}
+    \item \texttt{idx\_notifications\_user} on \texttt{notifications(user\_id)}
+    \item \texttt{unique\_wishlist} on \texttt{wishlists(user\_id, destination\_id)}
+\end{itemize}
+
+\section{Procedural Design}
+
+\subsection{Use Case Diagram}
+
+The Use Case Diagram illustrates the primary interactions between the three actor roles (Administrator, Tourist, and Service Provider) and the system's functional modules.
+
+\textbf{Actors:}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Administrator:} Manages destinations, packages, events, users, provider approvals, and views analytics.
+    \item \textbf{Tourist (User):} Browses destinations, books packages, accesses services, writes reviews, manages wishlists, and makes payments.
+    \item \textbf{Service Provider:} Registers business profile, lists services, manages service listings, and tracks bookings.
+\end{itemize}
+
+\textbf{Use Cases:}
+
+\begin{longtable}{|p{3cm}|p{10cm}|}
+\hline
+\textbf{Actor} & \textbf{Use Cases} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Actor} & \textbf{Use Cases} \\
+\hline
+\endhead
+Administrator & Register/Login, Manage Destinations, Manage Packages, Manage Events, Manage Users, Approve/Reject Providers, Approve/Reject Services, View Analytics, View Notifications, Manage Bookings \\
+\hline
+Tourist & Register/Login, Browse Destinations, Search \& Filter, View Destination Details, Book Packages, Select Services, Make Payment, Write Reviews, Manage Wishlist, View Booking History, Logout \\
+\hline
+Service Provider & Register/Login, Create Business Profile, List Services, Edit/Delete Services, View Bookings, Update Profile, Logout \\
+\hline
+\end{longtable}
+
+\clearpage
+
+\begin{figure}[htbp]
+\centering
+% Replace 'usecase_diagram.png' with the exact filename of your uploaded image
+\includegraphics[width=0.9\textwidth, keepaspectratio]{usecase_diagram.png}
+\caption{Use Case Diagram -- Tourism Promotion Website}
+\label{fig:usecase}
+\end{figure}
+
+\subsection{Activity Diagram}
+
+The Activity Diagram represents the workflow for the primary booking process in the Tourism Promotion Website:
+
+\textbf{Tourist Booking Flow:}
+\begin{enumerate}[leftmargin=2em]
+    \item Tourist visits the homepage and browses destinations.
+    \item Tourist selects a destination and views details (highlights, services, packages, reviews).
+    \item Tourist selects a travel package or creates a custom booking.
+    \item Tourist fills in booking details (travel date, guest count, special requests).
+    \item Tourist optionally selects local services (hotel, guide, transport, restaurant).
+    \item System calculates total price (package price + service prices + distance-based costs).
+    \item Tourist reviews booking summary and proceeds to payment.
+    \item Tourist enters payment details (card number, cardholder name).
+    \item System processes payment and generates unique payment reference.
+    \item System creates booking record with status ``Pending''.
+    \item Admin reviews and confirms or cancels the booking.
+    \item Tourist receives booking confirmation and can view booking history.
+\end{enumerate}
+
+\textbf{Service Provider Registration Flow:}
+\begin{enumerate}[leftmargin=2em]
+    \item Provider visits registration page and selects ``Service Provider'' role.
+    \item Provider fills in name, email, password, and phone number.
+    \item System creates user account with status ``pending''.
+    \item System sends notification to admin about new provider registration.
+    \item Admin reviews provider profile and approves or rejects.
+    \item Upon approval, provider gains access to provider dashboard.
+    \item Provider creates business profile and lists services.
+    \item Admin reviews and approves individual service listings.
+    \item Approved services become visible to tourists on the platform.
+\end{enumerate}
+
+\clearpage
+
+\begin{figure}[htbp]
+\centering
+% Replace 'activity_diagram.png' with the exact filename of your uploaded image
+\includegraphics[width=0.7\textwidth, keepaspectratio]{activity_diagram.png}
+\caption{Activity Diagram -- Tourist Booking and Service Provider Workflow}
+\label{fig:activity}
+\end{figure}
+
+\section{User Interface Design}
+
+The user interface of the Tourism Promotion Website follows modern web design principles with emphasis on visual appeal, usability, and responsiveness.
+
+\textbf{Design Principles:}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Glassmorphism:} Semi-transparent, frosted-glass effects on navigation bars and card components for a modern, premium aesthetic.
+    \item \textbf{Dark/Light Theme:} User-togglable theme with consistent color schemes using CSS custom properties (variables).
+    \item \textbf{Responsive Layout:} Bootstrap 5 grid system ensuring optimal display across desktop (1920px), tablet (768px), and mobile (375px) viewports.
+    \item \textbf{Micro-Animations:} AOS (Animate On Scroll) library for scroll-triggered element animations, creating an engaging browsing experience.
+    \item \textbf{Interactive Carousels:} Swiper.js touch-enabled sliders for destination and package showcases.
+    \item \textbf{Typography:} Google Fonts ``Outfit'' with variable weights (300--900) for clean, modern text rendering.
+    \item \textbf{Color Palette:} Curated color scheme with brand accents, consistent across all pages and components.
+\end{itemize}
+
+\textbf{Key UI Components:}
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Landing Page:} Hero section with animated text, featured destinations carousel, service categories, travel packages grid, testimonials slider, and call-to-action sections.
+    \item \textbf{Login / Registration Pages:} Clean, centered forms with role selection (Tourist / Service Provider / Admin), input validation, and visual feedback.
+    \item \textbf{Admin Dashboard:} Comprehensive management interface with sidebar navigation, data tables, analytics charts, user management panels, and notification center.
+    \item \textbf{Tourist Dashboard:} Personalized dashboard with booking history, wishlist, reviews, profile management, and destination recommendations.
+    \item \textbf{Provider Dashboard:} Service management interface with listing creation forms, booking tracker, profile editor, and performance metrics.
+    \item \textbf{Destination Detail Pages:} Rich content pages with image galleries, highlight cards, available services, packages, reviews, and booking integration.
+\end{enumerate}
+
+% Placeholder for UI screenshots
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{screenshots/landing_page.png}
+%     \caption{Landing Page -- Tourism Promotion Website}
+% \end{figure}
+%
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]{screenshots/admin_dashboard.png}
+%     \caption{Admin Dashboard}
+% \end{figure}

@@ -1,0 +1,73 @@
+% ===================== CHAPTER 1 : INTRODUCTION =====================
+\chapter{INTRODUCTION}
+
+\section{Project Overview}
+
+The \textbf{Tourism Promotion Website} is a full-stack web application designed to promote sustainable tourism by connecting tourists with local service providers across popular Indian destinations. The platform operates as a digital marketplace where tourists can explore heritage sites, book curated travel packages, access local services, and contribute community-driven reviews---while simultaneously empowering local businesses such as hotels, restaurants, tour guides, transport operators, and handicraft vendors to register, list, and manage their services online.
+
+The project was developed as part of the \textbf{Social Immersion Sustainable Development Goals (SDG)} initiative under Personalized Learning Tracks (Track 3). It addresses the need for a centralized digital platform that bridges the gap between travelers and local communities, enabling inclusive economic participation and cultural preservation through technology.
+
+The application features a role-based architecture with three distinct user roles:
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Administrator:} Manages destinations, travel packages, events, user accounts, service provider approvals, and platform-wide analytics.
+    \item \textbf{Tourist (User):} Browses destinations, books packages, accesses local services, manages wishlists and itineraries, writes reviews, and makes secure payments.
+    \item \textbf{Service Provider:} Registers a business profile, lists services linked to specific destinations, tracks bookings, and manages service offerings through a dedicated dashboard.
+\end{itemize}
+
+The system is built using \textbf{Node.js} and \textbf{Express.js} on the server side, with a \textbf{MySQL} relational database for data persistence. The front end uses \textbf{HTML5, CSS3, JavaScript}, and \textbf{Bootstrap 5} for a responsive, mobile-friendly user interface. Authentication is handled through \textbf{JSON Web Tokens (JWT)} combined with server-side session management for secure, role-isolated access control.
+
+\section{Objectives}
+
+The primary objectives of the Tourism Promotion Website are:
+
+\begin{enumerate}[leftmargin=2em]
+    \item To design and develop a comprehensive web-based tourism marketplace that facilitates discovery of tourist destinations, booking of travel packages, and access to local services.
+    \item To create a role-based access control system with separate dashboards and functionalities for administrators, tourists, and local service providers.
+    \item To provide local service providers---including hoteliers, tour guides, restaurant owners, transport operators, and artisans---a digital platform to register, list, and promote their businesses directly to tourists.
+    \item To implement secure user authentication and session management using JWT tokens and Express sessions.
+    \item To build an administrative control panel for managing destinations, packages, events, user governance, provider approvals, and platform analytics.
+    \item To integrate a booking and payment management system with status tracking (Pending, Confirmed, Completed, Cancelled) and payment processing.
+    \item To support community-driven engagement through a reviews and ratings system for destinations, services, and packages.
+    \item To implement a wishlist feature enabling tourists to save and organize preferred destinations for future travel planning.
+    \item To promote the goals of \textbf{SDG 8 (Decent Work and Economic Growth)} by creating digital economic opportunities for small-scale local service providers and supporting sustainable tourism practices.
+    \item To design a responsive, visually appealing user interface with modern design elements including dark/light theme toggling, glassmorphism, and smooth animations.
+\end{enumerate}
+
+\section{Scope of the Project}
+
+The scope of the Tourism Promotion Website encompasses the following functional and technical areas:
+
+\needspace{5\baselineskip}
+\textbf{Functional Scope:}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Destination Management:} CRUD operations for tourist destinations with support for categories (Hill Station, Beach, Heritage, Wildlife, Pilgrimage), image galleries, seasonal information, budget ranges, nearby attractions, and featured destination tagging.
+    \item \textbf{Travel Package Management:} Creation and management of curated multi-day travel packages linked to specific destinations, with pricing, descriptions, and itinerary details.
+    \item \textbf{Local Service Marketplace:} A service listing system supporting multiple service types (Hotels, Guides, Taxis, Restaurants, Handicrafts) with fixed and per-kilometer pricing models, provider profiles, and admin approval workflows.
+    \item \textbf{Booking System:} End-to-end booking lifecycle management including booking creation, status updates, guest count, travel date selection, distance-based pricing calculation, and special request handling.
+    \item \textbf{Payment Processing:} Simulated payment gateway with card-based payment, unique reference generation, and payment status tracking (Unpaid, Paid, Refunded).
+    \item \textbf{Reviews and Ratings:} User-submitted reviews for destinations, services, and packages with star ratings and textual comments.
+    \item \textbf{Wishlist Management:} Personal wishlist functionality for registered tourists to bookmark destinations.
+    \item \textbf{Notification System:} In-app notifications for admin alerts (new provider registrations, booking updates) and user-facing notifications.
+    \item \textbf{Analytics Dashboard:} Administrative analytics providing insights into booking trends, revenue metrics, popular destinations, and user activity.
+    \item \textbf{Event Management:} Listing and promotion of local cultural events, festivals, and community activities tied to tourist destinations.
+\end{itemize}
+
+\needspace{5\baselineskip}
+\textbf{Technical Scope:}
+\begin{itemize}[leftmargin=2em]
+    \item Full-stack web application using Node.js, Express.js, MySQL, HTML5, CSS3, JavaScript, and Bootstrap 5.
+    \item RESTful API design with modular route handling for authentication, destinations, bookings, services, reviews, events, packages, providers, notifications, analytics, uploads, wishlists, and payments.
+    \item Role-based middleware for access control with JWT verification.
+    \item File upload handling using Multer for service provider images and destination galleries.
+    \item Responsive design supporting desktop, tablet, and mobile viewports.
+    \item Session-based route protection for dashboard directories.
+\end{itemize}
+
+\needspace{5\baselineskip}
+\textbf{Limitations of Scope:}
+\begin{itemize}[leftmargin=2em]
+    \item The payment system uses a simulated gateway and does not integrate with live payment processors such as Razorpay or Stripe.
+    \item The application is designed for single-server deployment and does not include distributed system or microservices architecture.
+    \item Real-time features such as live chat or push notifications are not implemented in the current version.
+    \item Multi-language support and advanced accessibility features are planned for future iterations.
+\end{itemize}
