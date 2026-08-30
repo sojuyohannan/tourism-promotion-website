@@ -41,3 +41,11 @@ If you need to log in as an administrator, the default seeded account is:
 * **Password:** `admin123`
 
 You can create Tourist or Provider accounts directly from the Register page.
+
+## System Modules
+- **Authentication & RBAC**: Tourists, Tourism Providers, and Administrators
+- **Destination & Package Discovery**: Dynamic listing, filtering, search, and pricing calculator
+- **Booking & Checkout Pipeline**: Direct booking management with automated transaction recording
+- **Provider Management**: Provider verification, onboarding, and service listing dashboard
+- **Administrative Control Panel**: Platform analytics, user management, and provider approvals
+- **Automated Testing Suite**: Full end-to-end test automation with Selenium WebDriver
